@@ -22,17 +22,12 @@ jobs:
           node-version: 20
 
       - name: Install Dependencies
-        run: |
-          cd todo
-          npm install
+        working-directory: ./todo
+        run: npm install
 
       - name: Build Project
-        run: |
-          cd todo
-          npm run build
-
-      - name: Check Build Folder
-        run: ls -la todo/build
+        working-directory: ./todo
+        run: npm run build
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
