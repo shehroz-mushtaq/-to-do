@@ -9,6 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -16,7 +19,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'   # ✅ better than 18
 
       - name: Install & Build
         run: |
@@ -24,7 +27,6 @@ jobs:
           npm install
           npm run build
 
-      # 🔍 Debug (important for artifact error)
       - name: Check build folder
         run: ls -la todo/build
 
@@ -48,5 +50,5 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # ✅ fix this
           publish_dir: ./todo/build
