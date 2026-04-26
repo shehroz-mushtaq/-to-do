@@ -19,18 +19,22 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'   # ✅ better than 18
+          node-version: 20
 
-      - name: Install & Build
+      - name: Install Dependencies
         run: |
           cd todo
           npm install
+
+      - name: Build Project
+        run: |
+          cd todo
           npm run build
 
-      - name: Check build folder
+      - name: Check Build Folder
         run: ls -la todo/build
 
-      - name: Upload artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: production-file
@@ -41,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download artifact
+      - name: Download Artifact
         uses: actions/download-artifact@v4
         with:
           name: production-file
@@ -50,5 +54,5 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}  # ✅ fix this
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./todo/build
